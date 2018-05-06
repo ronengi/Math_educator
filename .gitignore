@@ -1,0 +1,12 @@
+*out
+*o
+*swp
+build/
+dist/
+nbproject/
+.dep.inc
+
+# other executables
+
+# valgrind output
+vgcore*
