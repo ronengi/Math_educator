@@ -155,18 +155,67 @@ Fraction negative(const Fraction& fr) {
  *                             i/o                                 *
  *******************************************************************/
 
-string expanded(const Fraction& fr, int new_denominator) {
-    // TODO return a representation as expanded
-    return "";
+// TODO try to return a representation as expanded with new denominator ndd
+string expanded(const Fraction& fr, int ndd) {
+    ostringstream os;
+    int nn = fr.get_numerator();
+    int dd = fr.get_denominator();
+    char sign = '\0';
+    if(nn < 0) {
+        sign = '-';
+        nn = abs(nn);
+    }
+    if(dd == ndd)
+        os << fr;
+    else {
+        int common = lcm(dd, ndd);
+        nn *= common / dd;
+        if(nn % (common/ndd) == 0) {
+            nn /= (common/ndd);
+            dd = ndd;
+            os << sign << setw(2) << nn << "/" << setw(2) << dd;
+        }
+        else
+            os << fr;
+    }
+
+    return os.str();
 }
 
+// return a representation as a mixed number
 string mixed(const Fraction& fr) {
-    // TODO return a representation as a mixed number
-    return "";
+    ostringstream os;
+    int nn = fr.get_numerator();
+    int dd = fr.get_denominator();
+    int ww = 0;
+    char sign = '\0';
+    if(nn < 0) {
+        sign = '-';
+        nn = abs(nn);
+    }
+    if(nn < dd)
+        os << fr;
+    else {
+        ww = nn / dd;
+        nn = nn % dd;
+        os << sign << setw(2) << ww;
+        if(nn > 0)
+            os << ' ' << setw(2) << nn << "/" << setw(2) << dd;
+    }
+    return os.str();
 }
+
+
+// TODO implement mixed_and_expanded()
+
 
 ostream& operator<<(ostream& os, const Fraction& fr) {
-    return os << setw(2) << fr.get_numerator() << "/" << setw(2) << fr.get_denominator();
+    int nn = fr.get_numerator();
+    if(nn < 0) {
+        os << '-';
+        nn = abs(nn);
+    }
+    return os << setw(2) << nn << "/" << setw(2) << fr.get_denominator();
  }
 
 istream& operator>>(istream& is, Fraction& fr) {

@@ -18,6 +18,7 @@
 #include <iomanip>
 #include <stdexcept>
 #include <numeric>
+#include <sstream>
 using namespace std;
 
 
