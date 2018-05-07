@@ -16,7 +16,6 @@
 #include <chrono>
 #include "Fraction.hpp"
 using namespace std;
-using namespace std::chrono;
 
 int rand(int min, int max) {
     auto start = std::chrono::system_clock::now().time_since_epoch().count();
@@ -62,7 +61,6 @@ Fraction binary_action(const Fraction& ff1, const Fraction& ff2, char action) {
  *
  */
 int main(int argc, char** argv) {
-
     vector<Fraction> f1;
     vector<Fraction> f2;
     vector<char> action;
@@ -70,8 +68,16 @@ int main(int argc, char** argv) {
     vector<bool> grades;
 
     for(int i = 0; i < 2; ++i) {
-        f1.push_back(Fraction {rand(1, 10), rand(1, 10)});
-        f2.push_back(Fraction {rand(1, 10), rand(1, 10)});
+        Fraction ff1{rand(1, 10), rand(1, 10)};
+        Fraction ff2{rand(1, 10), rand(1, 10)};
+        if(ff1 < ff2) {
+            f1.push_back(ff2);
+            f2.push_back(ff1);
+        }
+        else {
+            f1.push_back(ff1);
+            f2.push_back(ff2);
+        }
         action.push_back(rand_action());
     }
 
@@ -84,7 +90,8 @@ int main(int argc, char** argv) {
         ans2 = binary_action(f1[i], f2[i], action[i]);
         if(ans1 != ans2) {
             grades.push_back(false);
-            cout << "\tSorry, the answer is: " << ans2;
+            cout << "\tSorry, the answer is: " << ans2 << ", \t\tNot: " << ans1;
+
         }
         else
             grades.push_back(true);

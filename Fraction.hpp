@@ -26,7 +26,6 @@ public:
     Fraction();                             // default constructor
     Fraction(int nn);
     Fraction(int nn, int dd);
-    Fraction(int nn, int dd, int ww);
     Fraction(const Fraction& other);        // copy constructor
 
     Fraction& operator+=(const Fraction& other);
@@ -47,26 +46,23 @@ public:
 
     int get_numerator() const;
     int get_denominator() const;
-    int get_whole() const;
 
     void set_numerator(int nn);
     void set_denominator(int dd);
-    void set_whole(int ww);
 
     void reduce();
-    void mixed();
-    void unmixed();
 
 private:
-    int numerator;
-    int denominator;
-    int whole;
+    int numerator;      // the sign of the whole fraction is here
+    int denominator;    // always positive
 };
 
 
 Fraction reciprocal(const Fraction& fr);
 Fraction negative(const Fraction& fr);
 
+string mixed(const Fraction& fr);
+string expanded(const Fraction& fr, int new_denominator);
 
 ostream& operator<<(ostream& os, const Fraction& fr);
 istream& operator>>(istream& is, Fraction& fr);
